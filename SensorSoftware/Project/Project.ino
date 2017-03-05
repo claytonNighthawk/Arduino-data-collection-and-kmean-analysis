@@ -109,7 +109,7 @@ void loop() {
   struct tm * localt;
   time(&t);
   localt = localtime(&t);
-  strftime(timestring, 22, "%Y.%m.%d%H:%M:%S ", localt);
+  strftime(timestring, 22, "%Y.%m.%d.%H:%M:%S ", localt);
 
   //create output buffer and place the time stamp in it
   String data = String(timestring);
@@ -182,7 +182,7 @@ void loop() {
   client.publish("office", data.buffer);
 
 
-  // Wait one minute between measurements.
-  delay(30000);
+  // Wait ten seconds between measurements.
+  delay(6000);
 }
 

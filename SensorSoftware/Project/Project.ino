@@ -2,7 +2,6 @@
 #include <Wire.h>
 #include <SPI.h>
 #include <Ethernet.h>
-//#include <WiFi.h>
 #include <PubSubClient.h>
 #include <time.h>
 
@@ -11,14 +10,6 @@
 // timedatectl set-timezone American/Los_Angeles; date;
 // these are note to fix the below hard coding of dhcp information.  If we don't fix it and the dhcp lease expires the connection will break.
 // also this setup presumes that the edison has been connected to the wifi via other means.  console in our case.
-
-//https://www.arduino.cc/en/Reference/EthernetLocalIP
-//https://www.arduino.cc/en/Reference/WiFiLocalIP
-//https://www.arduino.cc/en/Reference/WiFiMACAddress
-//dig cas-cls.uoregon.edu | grep -v ';' | awk '/cas-cls/ {print $NF}'
-//configure_edison --showWiFiIP
-//ip = WiFi.localIP();
-//WiFi.macAddress(mac);
 
 // Update these with values suitable for your network.
 byte mac[]    = {  0x90, 0xB6, 0x86, 0x0E, 0x3D, 0x0D };
@@ -75,7 +66,7 @@ float calcTemp() {
   // Determine the current resistance of the thermistor based on the sensor value.
   float resistance = (float)(1023 - val) * 10000 / val;
 
-  // Calculate the temperature based on the resistance value.
+  // Calculate the temperature based on the resistance value.u
   float temperature = 1 / (log(resistance / 10000) / B + 1 / 298.15) - 273.15;
 
   // Returns Celsius
@@ -88,6 +79,19 @@ int calcSound() {
 
 int calcLight() {
   return analogRead(pinLight);
+
+/* 100 = covered by a black porous surface
+ * 200 = 1 LUX
+ * 300 = 3 LUX
+ * 400 = 6 LUX
+ * 500 = 10 LUX
+ * 600 = 15 LUX lights off in chris's office day time
+ * 700 = 35 LUX lights on chrises offi
+ * 800 = 80 LUX
+ * 900 = 100+ LUX dark over cast day
+ */
+
+  
 }
 
 void setup() {
@@ -128,13 +132,13 @@ void loop() {
 
   data += " ";
   data += stringVal;
-  data += " ";
+  data += "  ";
   data += " temp ";
 
   lcd.print(temperature);
   cursor += 5;
   lcd.setCursor(cursor, 0);
-  lcd.print("C");
+  lcd.print("C ");
   cursor += 2;
 
 

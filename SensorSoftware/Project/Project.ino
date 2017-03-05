@@ -130,15 +130,14 @@ void loop() {
   
   stringVal+=String(int(temperature))+ "."+String(getDecimal(temperature));
 
-  data += " ";
+  data += " T ";
   data += stringVal;
-  data += "  ";
-  data += " temp ";
+
 
   lcd.print(temperature);
   cursor += 5;
   lcd.setCursor(cursor, 0);
-  lcd.print("C ");
+  lcd.print(" C ");
   cursor += 2;
 
 
@@ -146,42 +145,44 @@ void loop() {
   // doesn't update very fast, can't tell what exactly is happening
   int soundValue = calcSound();
 
- data += String(soundValue);
- data += " sound  ";
+  data += " S ";
+  data += String(soundValue);
+ 
 
   lcd.setCursor(cursor, 0);
   lcd.print(soundValue);
   cursor += 3;
   lcd.setCursor(cursor, 0);
-  lcd.print("\"dB\""); //incorrect units
+  lcd.print(" S  "); //incorrect units
 
 
   cursor = 0;
   // Unknown units, guessing Lumins
   int lightValue = calcLight();
 
+  data += " L ";
   data += String(lightValue);
-  data += " light  ";
+
 
   lcd.setCursor(cursor, 1);
   lcd.print(lightValue);
   cursor += 3;
   lcd.setCursor(cursor, 1);
-  lcd.print("\"LUX\""); //incorrect units
+  lcd.print(" L "); //incorrect units
   cursor += 6;
 
   //Seconds
   lcd.setCursor(cursor, 1);
-  int seconds = millis() / 1000;
-  lcd.print(seconds);
-  lcd.setCursor(cursor + 1 + floor(log10(seconds)), 1);
-  lcd.print("sec");
+  int minutes = millis() / 60000;
+  lcd.print(minutes );
+  lcd.setCursor(cursor + 1 + floor(log10(minutes)), 1);
+  lcd.print(" min");
 
   //send the data to our channel as a char array.
   client.publish("office", data.buffer);
 
 
-  // Wait one second between measurements.
-  delay(500);
+  // Wait one minute between measurements.
+  delay(30000);
 }
 

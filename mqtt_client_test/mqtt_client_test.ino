@@ -9,7 +9,7 @@
 
 #include <SPI.h>
 #include <Ethernet.h>
-#include <WiFi.h>
+//#include <WiFi.h>
 #include <PubSubClient.h>
 
 // Update these with values suitable for your network.
@@ -24,8 +24,8 @@
 
 //configure_edison --showWiFiIP
 
-ip = WiFi.localIP();
-WiFi.macAddress(mac);
+//ip = WiFi.localIP();
+//WiFi.macAddress(mac);
 byte mac[]    = {  0x90, 0xB6, 0x86, 0x0E, 0x3D, 0x0D };
 IPAddress ip(10, 111, 224, 47);
 IPAddress server(128, 223, 31, 3);

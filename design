@@ -1,5 +1,5 @@
-
 5 sensors will collect data from two intel edisons running an ardrino sketch
 the sketch will use a message passing library to pass it to the ubuntu host
 the messaging client on the host will digest the messages and save them to a local file
 We will write c++ code to graph the or manipulate the data sets.
+specificially using kmeans 

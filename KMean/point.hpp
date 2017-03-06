@@ -2,13 +2,22 @@
 #define __POINT_HPP
 
 #include "centroid.hpp"
+#include <utility>
 
 class Point {
 public:
-	Point(int, int);
+	Point(double x, double y);
 	virtual ~Point();
-	const std::pair<int, int> loc;  // Making these public data memebers since it is simple  
-	Centroid parent;  				// and 4 getter/setters would be too much 
+	friend class Centroid;
+
+
+	double computeDist(Centroid cent);
+
+protected:
+
+	const std::pair<double, double> loc;  
+	Centroid parent;
+
 };
 
 #endif

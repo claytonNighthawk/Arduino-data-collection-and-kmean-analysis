@@ -1,5 +1,3 @@
-// https://www.youtube.com/watch?v=_aWzGGNrcic
-
 #ifndef __CENTROID_HPP
 #define __CENTROID_HPP
 
@@ -11,16 +9,22 @@ class Centroid {
 
 public:
 	Centroid();
+	Centroid(double x, double y);
 	virtual ~Centroid();
-	void setLocation();
+	friend class Point;
 
-	void addPoint();
-	void removePoint();
-	std::vector<Point> getPoints();
+	void setLocation(double x, double y);
+	std::pair<double, double> getLocation();
+	void addPoint(Point newP);
+	void removePoint(Point oldP); 
+	void recalculate(); 
+
+	bool operator==(const MyClass &other);
+	bool operator!=(const MyClass &other);
 
 protected:
-	std::vector<Point> points;
 	std::pair<double, double> loc;	
+	std::vector<Point> points;
 };
 
 #endif

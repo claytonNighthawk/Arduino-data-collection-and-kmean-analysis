@@ -29,6 +29,7 @@ void Kmean::run(int iterations) {
     Centroid c = centroids[0];
     double minDist = p.computeDist(c);
     int closestCentroid = 0; 
+    double tempDist;
     Centroid oldCentroid;
     for (int k = 0; k < iterations; ++k) {
         for (int i = 0; i < points.size(); i++) {

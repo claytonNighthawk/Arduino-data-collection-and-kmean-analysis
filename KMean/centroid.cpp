@@ -1,6 +1,5 @@
 #include <vector>
 #include <utility>
-#include <numeric>
 #include "centroid.hpp" 
 #include "point.hpp"
 
@@ -38,11 +37,11 @@ void Centroid::recalculate() {
     loc = avg;
 }
 
-bool Centroid::operator==(const MyClass &other) { 
+bool Centroid::operator==(const Centroid &other) { 
     return this->loc == other.loc;
 }
 
-bool Centroid::operator!=(const MyClass &other) {
+bool Centroid::operator!=(const Centroid &other) {
     return !(*this == other);
 }
 

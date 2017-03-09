@@ -19,8 +19,8 @@ public:
 	void removePoint(Point oldP); 
 	void recalculate(); 
 
-	bool operator==(const MyClass &other);
-	bool operator!=(const MyClass &other);
+	bool operator==(const Centroid &other);
+	bool operator!=(const Centroid &other);
 
 protected:
 	std::pair<double, double> loc;	

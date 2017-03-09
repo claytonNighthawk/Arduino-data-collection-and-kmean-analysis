@@ -2,18 +2,22 @@
 #define __KMEAN_HPP
 
 #include <vector>
+#include <utility>
+#include "centroid.hpp" 
+#include "point.hpp"
+
 
 class Kmean {
 public:
-	Kmean();
-	Kmean(int numCentroids, std::vector<Point> points);
+	// Kmean();
+	Kmean(int numCentroids, std::vector<Point> &points);
 	virtual ~Kmean();
 
-	void addPoint(double x, double y);  // For eventual data streaming 
+	// void addPoint(double x, double y);  // For eventual data streaming 
 	void addCentroid(double x, double y);  
-	void getPoints();
 	void getCentroids();
 	void run(int iteratons);
+	// void graph(); ?
 
 protected:
 	std::vector<Point> points;

@@ -21,6 +21,7 @@ public:
 
 	bool operator==(const Centroid &other);
 	bool operator!=(const Centroid &other);
+	friend std::ostream& operator<< (std::ostream&, const Centroid&);
 
 protected:
 	std::pair<double, double> loc;	

@@ -15,6 +15,8 @@ public:
 
 	bool operator==(const Point &other);
 	bool operator!=(const Point &other);
+	friend std::ostream& operator<< (std::ostream&, const Point&);
+
 
 protected:
 	const std::pair<double, double> loc;  

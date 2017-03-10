@@ -45,6 +45,11 @@ bool Centroid::operator!=(const Centroid &other) {
     return !(*this == other);
 }
 
+ostream& operator<<(ostream& os, const Centroid& cent) {
+    os << "(" << cent.loc.first << ", " << cent.loc.second << ")";
+    return os;
+}
+
 
 
 

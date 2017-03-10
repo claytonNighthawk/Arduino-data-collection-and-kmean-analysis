@@ -13,7 +13,7 @@ public:
 	Kmean(int numCentroids, std::vector<Point> &points);
 	virtual ~Kmean();
 
-	// void addPoint(double x, double y);  // For eventual data streaming 
+	// void addPoint(double x, double y);  // For eventual data streaming, done externally? 
 	void addCentroid(double x, double y);  
 	void getCentroids();
 	void run(int iteratons);

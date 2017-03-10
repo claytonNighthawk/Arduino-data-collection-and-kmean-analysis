@@ -34,3 +34,8 @@ bool Point::operator==(const Point &other) {
 bool Point::operator!=(const Point &other) {
     return !(*this == other);
 }
+
+ostream& operator<<(ostream& os, const Point& point) {
+    os << "(" << point.loc.first << ", " << point.loc.second << ")";
+    return os;
+}

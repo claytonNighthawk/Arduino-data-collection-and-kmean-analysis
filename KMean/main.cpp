@@ -20,7 +20,7 @@ int main() {
 	// or maybe a vector of vectors or map of vectors
 
 	// calls file parser on fileName and populates the vectors
-	fileParser(fileName, &points_TTemp, &points_TL, &points_TS, &points_TempL, &points_TempS, &points_LS); 
+	fileParser(fileName, points_TTemp, points_TL, points_TS, points_TempL, points_TempS, points_LS); 
 
 	Kmean kmean_TTemp = new Kmean(numCentroids, points_TTemp);
 	// And so on...

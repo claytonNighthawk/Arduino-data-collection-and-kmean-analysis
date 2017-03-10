@@ -4,9 +4,9 @@
 #include <vector>
 #include <utility>
 #include "centroid.hpp" 
-#include "point.hpp"
 
 namespace kmean {
+// typedef std::pair<double, double> Point; //From centroid.hpp
 
 class Kmean {
 public:
@@ -16,7 +16,7 @@ public:
 
 	// void addPoint(double x, double y);  // For eventual data streaming, done externally? 
 	void addCentroid(double x, double y);  
-	void getCentroids();
+	std::vector<Centroid> getCentroids();
 	void run(int iteratons);
 	// void graph(); ?
 

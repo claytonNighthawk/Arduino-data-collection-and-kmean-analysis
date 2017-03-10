@@ -4,23 +4,25 @@
 #include <vector>
 #include <utility>
 #include <iostream>
-// #include "point.hpp"
 
 namespace kmean {
-class Point;
+typedef std::pair<double, double> Point; // Const?
+// What happens if I have std::pair<double, double> that isnt a "Point"? 
+// Since they are functionally the same it shouldn't matter, anything I declare as 
+// std::pair<double, double> is just a plain location where as Point has more meaning attached to it
 
 class Centroid {
 
 public:
-	Centroid();
+	Centroid(); 
 	Centroid(double x, double y);
 	virtual ~Centroid();
-	friend class Point;
 
 	void setLocation(double x, double y);
 	std::pair<double, double> getLocation();
 	void addPoint(Point newP);
 	void removePoint(Point oldP); 
+	double computeDist(Point point);
 	void recalculate(); 
 
 	bool operator==(const Centroid &other);

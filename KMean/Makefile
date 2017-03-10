@@ -1,6 +1,6 @@
 CC = g++
 CFLAGS = -g -std=c++11
-KMEAN_OBJECTS = centroid.o point.o kmean.o
+KMEAN_OBJECTS = centroid.o kmean.o
 
 
 %.o: %.cpp

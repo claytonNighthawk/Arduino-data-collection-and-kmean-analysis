@@ -1,7 +1,7 @@
 #include <vector>
 #include <utility>
 #include "centroid.hpp" 
-#include "point.hpp"
+// #include "point.hpp"
 
 using namespace kmean;
 
@@ -15,7 +15,7 @@ void Centroid::setLocation(double x, double y) {
     loc = std::make_pair(x, y);
 }
 
-std::pair<double, double> Centroid::getLocataion() {
+Point Centroid::getLocataion() {
     return loc;
 }
 
@@ -30,14 +30,20 @@ void Centroid::removePoint(Point oldP) {
     }
 }
 
+double Centroid::computeDist(Point point) {
+    double d21 = (point.first - loc.first) * (point.first - loc.first);  // The first term in the dist formula 
+    double d22 = (point.second - loc.second) * (point.second - loc.second);  // The second term in the dist formula 
+    return sqrt(d21 + d22);                            // The final distance from the point to the provided centroid
+}
+
 void Centroid::recalculate() { 
     int x = 0;
     int y = 0
     for (int i = 0; i < points.size(); i++) {
-        x += points.loc.first;
-        y += points.loc.second;  
+        x += points[i].loc.first;
+        y += points[i].second;  
     }
-    std::pair<double, double> avg = make_pair(x / points.size(), y / points.size()); 
+    Point avg = make_pair(x / points.size(), y / points.size()); 
     loc = avg;
 }
 

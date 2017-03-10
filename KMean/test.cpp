@@ -2,7 +2,6 @@
 #include <utility>
 #include "kmean.hpp"
 #include "centroid.hpp" 
-#include "point.hpp"
 
 using namespace kmean;
 
@@ -17,7 +16,7 @@ void vectorMaker(std::vector<Point> &points, int numPoints) {
     for (int i = 0; i < numPoints; i++) {
         x = fRand(0, 5);
         y = fRand(0, 5);
-        p = new Point(x, y);
+        p = make_pair(x, y);
         points.push_back(p);
     }
 }
@@ -50,6 +49,7 @@ int main() {
     printVector(centroids);
     printVector(points);
 
+    Point newPoint = make_pair(fRand(0, 5), fRand(0, 5));
     points.push_back(newPoint);
     kmeanTest.run(5); 
 

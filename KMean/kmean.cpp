@@ -2,7 +2,6 @@
 #include <utility>
 #include "kmean.hpp"
 #include "centroid.hpp" 
-#include "point.hpp"
 
 using namespace kmean;
 
@@ -12,7 +11,7 @@ double fRand(double fMin, double fMax) {
     return fMin + f * (fMax - fMin);
 }
 
-Kmean::Kmean() {}
+// Kmean::Kmean() {}
 
 Kmean::Kmean(int numCentroids, std::vector<Point> &points) {
     this->points = points;
@@ -25,27 +24,31 @@ Kmean::Kmean(int numCentroids, std::vector<Point> &points) {
     }
 }
 
-void Kmean::addPoint(double x, double y) {
-    Point p = new Point(x, y);
-    points.push_back(p);
-} 
+// void Kmean::addPoint(double x, double y) {
+//     Point p = new Point(x, y);
+//     points.push_back(p);
+// } 
 
 void Kmean::addCentroid(double x, double y) {
     Centroid c = new Centroid(x, y);
     centroids.push_back(c);
 }
 
+std::vector<Centroid> getCentroids() {
+    return centroids;
+}
+
 void Kmean::run(int iterations) {
     Point p = points[0];
     Centroid c = centroids[0];
-    double minDist = p.computeDist(c);
-    int closestCentroid = 0; 
+    double minDist = c.computeDist(p);
+    int closestCentroid = 0; // 
     double tempDist;
     Centroid oldCentroid;
     for (int n = 0; n < iterations; ++n) {
         for (int i = 0; i < points.size(); i++) {
             for (int j = 0; j < centroids.size(); j++) {
-                tempDist = p.computeDist(c);
+                tempDist = c.computeDist(p);
                 if (minDist > tempDist) {
                     minDist = tempDist;
                     closestCentroid = j;

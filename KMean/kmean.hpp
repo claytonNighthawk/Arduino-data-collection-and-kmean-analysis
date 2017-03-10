@@ -6,6 +6,7 @@
 #include "centroid.hpp" 
 #include "point.hpp"
 
+namespace kmean {
 
 class Kmean {
 public:
@@ -23,6 +24,8 @@ protected:
 	std::vector<Point> points;
 	std::vector<Centroid> centroids;	
 };
+
+}
 
 #endif
 

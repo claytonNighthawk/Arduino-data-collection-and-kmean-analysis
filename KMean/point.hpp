@@ -2,7 +2,12 @@
 #define __POINT_HPP
 
 #include <utility>
-#include "centroid.hpp"
+#include <iostream>
+// #include "centroid.hpp"
+
+namespace kmean {
+
+class Centroid;
 
 class Point {
 public:
@@ -23,5 +28,7 @@ protected:
 	Centroid cent;
 
 };
+
+}
 
 #endif

@@ -3,15 +3,19 @@
 #include "centroid.hpp" 
 #include "point.hpp"
 
-using namespace std:
+using namespace kmean;
 
 Centroid::Centroid() {}
 
-void Centroid::setLocation(double x, double y) {
-    loc = make_pair(x, y);
+Centroid::Centroid(double x, double y) {
+    loc = std::make_pair(x, y);
 }
 
-pair<double, double> Centroid::getLocataion() {
+void Centroid::setLocation(double x, double y) {
+    loc = std::make_pair(x, y);
+}
+
+std::pair<double, double> Centroid::getLocataion() {
     return loc;
 }
 
@@ -20,7 +24,7 @@ void Centroid::addPoint(Point newP) {
 }
 
 void Centroid::removePoint(Point oldP) {
-    Point temp = find(points.begin(), points.end(), oldP); 
+    Point temp = std::find(points.begin(), points.end(), oldP); 
     if (temp != points.end()) {
         points.erase(temp);
     }
@@ -33,7 +37,7 @@ void Centroid::recalculate() {
         x += points.loc.first;
         y += points.loc.second;  
     }
-    pair<double, double> avg = make_pair(x / points.size(), y / points.size()); 
+    std::pair<double, double> avg = make_pair(x / points.size(), y / points.size()); 
     loc = avg;
 }
 
@@ -45,7 +49,7 @@ bool Centroid::operator!=(const Centroid &other) {
     return !(*this == other);
 }
 
-ostream& operator<<(ostream& os, const Centroid& cent) {
+std::ostream& operator<<(std::ostream& os, const Centroid& cent) {
     os << "(" << cent.loc.first << ", " << cent.loc.second << ")";
     return os;
 }

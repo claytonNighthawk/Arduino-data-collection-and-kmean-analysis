@@ -3,18 +3,18 @@
 #include "kmean.hpp"
 #include "centroid.hpp" 
 #include "point.hpp"
-// http://stackoverflow.com/questions/2704521/generate-random-double-numbers-in-c
 
-using namespace std:
+using namespace kmean;
 
 double fRand(double fMin, double fMax) {
+    // http://stackoverflow.com/questions/2704521/generate-random-double-numbers-in-c
     double f = (double)rand() / RAND_MAX;
     return fMin + f * (fMax - fMin);
 }
 
 Kmean::Kmean() {}
 
-Kmean::Kmean(int numCentroids, vector<Point> &points) {
+Kmean::Kmean(int numCentroids, std::vector<Point> &points) {
     this->points = points;
 
     for (int i = 0; i < numCentroids; i++) {

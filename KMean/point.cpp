@@ -3,7 +3,7 @@
 #include "centroid.hpp" 
 #include "point.hpp"
 
-using namespace std:
+using namespace kmean;
 
 Point::Point(double x, double y) {
 	loc = std::make_pair(x, y);
@@ -35,7 +35,7 @@ bool Point::operator!=(const Point &other) {
     return !(*this == other);
 }
 
-ostream& operator<<(ostream& os, const Point& point) {
+std::ostream& operator<<(std::ostream& os, const Point& point) {
     os << "(" << point.loc.first << ", " << point.loc.second << ")";
     return os;
 }

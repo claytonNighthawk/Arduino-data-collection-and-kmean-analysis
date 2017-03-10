@@ -3,7 +3,11 @@
 
 #include <vector>
 #include <utility>
-#include "point.hpp"
+#include <iostream>
+// #include "point.hpp"
+
+namespace kmean {
+class Point;
 
 class Centroid {
 
@@ -28,4 +32,5 @@ protected:
 	std::vector<Point> points;
 };
 
+}
 #endif

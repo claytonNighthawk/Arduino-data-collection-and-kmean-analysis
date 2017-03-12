@@ -11,7 +11,7 @@ namespace kmean {
 class Kmean {
 public:
 	// Kmean();
-	Kmean(int numCentroids, std::vector<Point> &points);
+	Kmean(int numCentroids, std::vector<Point*> &points);
 	virtual ~Kmean();
 
 	// void addPoint(double x, double y);  // For eventual data streaming, done externally? 
@@ -21,7 +21,7 @@ public:
 	// void graph(); ?
 
 protected:
-	std::vector<Point> points;
+	std::vector<Point*> pointsPTR;
 	std::vector<Centroid> centroids;	
 };
 

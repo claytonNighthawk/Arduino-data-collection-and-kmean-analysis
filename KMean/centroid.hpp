@@ -7,9 +7,8 @@
 
 namespace kmean {
 typedef std::pair<double, double> Point;
-// What happens if I have std::pair<double, double> that isnt a "Point"? 
-// Since they are functionally the same it shouldn't matter, anything I declare as 
-// std::pair<double, double> is just a plain location where as Point has more meaning attached to it
+// Since pair<double, double> and Point are functionally the same anything I declare as 
+// pair<double, double> is just a plain location where as Point has more meaning attached
 
 class Centroid {
 
@@ -20,9 +19,9 @@ public:
 
 	void setLocation(double x, double y);
 	std::pair<double, double> getLocation();
-	void addPoint(Point newP);
-	void removePoint(Point oldP); 
-	double computeDist(Point point);
+	void addPoint(Point* newP);
+	void clearPoints(); 
+	double computeDist(Point* point);
 	void recalculate(); 
 
 	bool operator== (const Centroid &other);
@@ -31,7 +30,7 @@ public:
 
 protected:
 	std::pair<double, double> loc;	
-	std::vector<Point> points;
+	std::vector<Point*> pointsPTR;
 };
 
 };

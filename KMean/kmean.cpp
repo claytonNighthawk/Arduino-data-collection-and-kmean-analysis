@@ -3,7 +3,7 @@
 #include "kmean.hpp"
 #include "centroid.hpp" 
 
-using namespace kmean;
+namespace kmean {
 
 double fRand(double fMin, double fMax) {
     // http://stackoverflow.com/questions/2704521/generate-random-double-numbers-in-c
@@ -19,8 +19,8 @@ Kmean::Kmean(int numCentroids, std::vector<Point> &points) {
     for (int i = 0; i < numCentroids; i++) {
         double x = fRand(15.0, 25.0); // needs a way to determine min and max of data set
         double y = fRand(15.0, 25.0); // needs a way to determine min and max of data set
-        cent = new Centroid(double x, double y);
-        centroids.push_back(cent);
+        Centroid* cent = new Centroid(x, y);
+        centroids.push_back(*cent);
     }
 }
 
@@ -30,11 +30,11 @@ Kmean::Kmean(int numCentroids, std::vector<Point> &points) {
 // } 
 
 void Kmean::addCentroid(double x, double y) {
-    Centroid c = new Centroid(x, y);
-    centroids.push_back(c);
+    Centroid* c = new Centroid(x, y);
+    centroids.push_back(*c);
 }
 
-std::vector<Centroid> getCentroids() {
+std::vector<Centroid> Kmean::getCentroids() {
     return centroids;
 }
 
@@ -57,7 +57,7 @@ void Kmean::run(int iterations) {
                 c = centroids[j];
             }
 
-            oldCentroid = p.getCentroid();
+            oldCentroid = p.getCentroid(); // Point not a class anymore this needs to be changed
             if (oldCentroid != centroids[closestCentroid]) {
                 oldCentroid.removePoint(p);
                 p.setCentroid(centroids[closestCentroid]);
@@ -71,3 +71,5 @@ void Kmean::run(int iterations) {
     }
     // Then graph the results or more interesting graph them as the method runs
 }
+
+};

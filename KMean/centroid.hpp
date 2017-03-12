@@ -6,7 +6,7 @@
 #include <iostream>
 
 namespace kmean {
-typedef std::pair<double, double> Point; // Const?
+typedef std::pair<double, double> Point;
 // What happens if I have std::pair<double, double> that isnt a "Point"? 
 // Since they are functionally the same it shouldn't matter, anything I declare as 
 // std::pair<double, double> is just a plain location where as Point has more meaning attached to it
@@ -27,12 +27,12 @@ public:
 
 	bool operator== (const Centroid &other);
 	bool operator!= (const Centroid &other);
-	friend std::ostream& operator<<(std::ostream&, const Centroid&); 
+	friend std::ostream& operator<<(std::ostream& os, const Centroid& cent);
 
 protected:
 	std::pair<double, double> loc;	
 	std::vector<Point> points;
 };
 
-}
+};
 #endif

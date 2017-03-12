@@ -5,7 +5,7 @@
 #include "centroid.hpp" 
 // #include "point.hpp"
 
-using namespace kmean;
+namespace kmean {
 
 Centroid::Centroid() {}
 
@@ -59,9 +59,11 @@ bool Centroid::operator!=(const Centroid &other) {
 
 std::ostream& operator<<(std::ostream& os, const Centroid& cent) {
     os << "(" << cent.loc.first << ", " << cent.loc.second << ")";
+    // auto loc = cent.getLocation();
+    // os << "(" << loc.first << ", " << loc.second << ")";
     return os;
 }
 
-
+};
 
 

@@ -72,7 +72,7 @@ bool Centroid::operator!=(const Centroid &other) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Centroid& cent) {
-    os << "(" << cent.loc.first << ", " << cent.loc.second << ")";
+    os << "Centroid @ (" << cent.loc.first << ", " << cent.loc.second << ")";
     return os;
 }
 

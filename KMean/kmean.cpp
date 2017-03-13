@@ -6,6 +6,8 @@
 #include "centroid.hpp" 
 
 namespace kmean {
+using std::cout;
+using std::endl;
 
 double fRand(double fMin, double fMax) {
     // http://stackoverflow.com/questions/2704521/generate-random-double-numbers-in-c
@@ -41,11 +43,13 @@ std::vector<Centroid> Kmean::getCentroids() {
 }
 
 void Kmean::run(int iterations) {
+    cout << "running kmean" << endl;
     Point p;
     Centroid c;
-    int closestCentroid = 0;  
+    int closestCentroid;
     double tempDist;
     for (int n = 0; n < iterations; ++n) {
+        cout << endl << "Starting new iteration" << endl; 
         unsigned int k; // used when indexing into centroids 
         // clears the vector of points ready for the new iteration
         for (k = 0; k < centroids.size(); k++) {
@@ -57,23 +61,31 @@ void Kmean::run(int iterations) {
             p = points[i];
             c = centroids[0];
             double minDist = c.computeDist(p);
+            closestCentroid = 0;
             for (k = 0; k < centroids.size(); k++) {
                 tempDist = c.computeDist(p);
+                cout << "point " << i;
+                cout << " tempDist " << tempDist << " minDist " << minDist << endl;
                 if (minDist > tempDist) {
                     minDist = tempDist;
                     closestCentroid = k;
+                    cout << "closestCentroid changed " << closestCentroid << endl;
                 }
                 c = centroids[k];
             }
+            cout << "Point " << i << " closestCentroid " << closestCentroid << endl;
             centroids[closestCentroid].addPoint(points[i]);
         }
 
         // recalculate the centroid locations
         for (k = 0; k < centroids.size(); k++) {
+            cout << "Centroid " << k << " " << centroids[k] << endl;
             centroids[k].recalculate();
+            cout << "Centroid " << k << " " << centroids[k] << endl;
         }
 
     }
+    cout << endl;
 }
 // Then graph the results or more interesting graph them as the method runs
 

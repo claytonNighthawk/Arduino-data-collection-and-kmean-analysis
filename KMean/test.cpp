@@ -14,12 +14,12 @@ double fRand(double fMin, double fMax) {
     return fMin + f * (fMax - fMin);
 }
 
-void vectorMaker(std::vector<Point> &points, int numPoints) {
+void pointVectorAdder(std::vector<Point> &points, double min, double max, int numPoints) {
     double x, y;
     Point p;
     for (int i = 0; i < numPoints; i++) {
-        x = fRand(0.0, 5.0);
-        y = fRand(0.0, 5.0);
+        x = fRand(min, max);
+        y = fRand(min, max);
         p = std::make_pair(x, y);
         points.push_back(p);
     }
@@ -54,20 +54,23 @@ void printCentroidPoints(std::vector<Centroid> &centroids) {
 
 int main() {
     // srand(time(NULL));
-    int numCentroids = 2; 
-    int iteratons = 10; 
+    // int numCentroids = 2; 
+    int iteratons = 5; 
     std::vector<Point> points;
     double min = 0.0;
     double max = 5.0;
 
-    vectorMaker(points, 5); 
+    pointVectorAdder(points, min, 3, 3); 
+    pointVectorAdder(points, 3, max, 3); 
+
     
     printVector(points);
 
-    Kmean* kmeanTest = new Kmean(numCentroids, points, min, max);
+    Kmean* kmeanTest = new Kmean(1, points, min, 2);
+    kmeanTest->addCentroid(fRand(3, 4), fRand(3, 4));
+    kmeanTest->addCentroid(fRand(4, max), fRand(4, max));
     std::vector<Centroid> centroids = kmeanTest->getCentroids();
     printVector(centroids);
-    printCentroidPoints(centroids);
     
     kmeanTest->run(iteratons);
     centroids = kmeanTest->getCentroids();
@@ -77,14 +80,15 @@ int main() {
     
     printVector(points);
 
-    Point newPoint = std::make_pair(fRand(min, max), fRand(min, max));
-    points.push_back(newPoint);
-    kmeanTest->run(5); 
+    // kmeanTest->addCentroid(fRand(4, 5), fRand(4,max));
+    // pointVectorAdder(points, min, max, 1); 
+    // kmeanTest->run(iteratons); 
+    // centroids = kmeanTest->getCentroids();
 
-    printVector(centroids);
-    printCentroidPoints(centroids);
+    // printVector(centroids);
+    // printCentroidPoints(centroids);
     
-    printVector(points);
+    // printVector(points);
 
     return 0;
 }

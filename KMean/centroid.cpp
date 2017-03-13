@@ -3,7 +3,6 @@
 #include <utility>      // std::pair
 #include <cmath>        
 #include "centroid.hpp" 
-// #include "point.hpp"
 
 namespace kmean {
 
@@ -13,7 +12,7 @@ Centroid::Centroid(double x, double y) {
     loc = std::make_pair(x, y);
 }
 
-Centroid::~Centroid() {} // probably causes memory leaks need to come back to this later
+Centroid::~Centroid() {} //TODO: probably causes memory leaks need to come back to this later
 
 void Centroid::setLocation(double x, double y) {
     loc = std::make_pair(x, y);
@@ -23,12 +22,16 @@ std::pair<double, double> Centroid::getLocation() {
     return loc;
 }
 
-void Centroid::addPoint(Point* newP) {
-    pointsPTR.push_back(newP);
+const std::vector<Point> Centroid::getPoints() {
+    return points;
+}
+
+void Centroid::addPoint(Point newP) {
+    points.push_back(newP);
 }
 
 void Centroid::clearPoints() {
-    pointsPTR.clear();
+    points.clear();
 }
 
 // void Centroid::removePoint(Point oldP) {
@@ -38,21 +41,26 @@ void Centroid::clearPoints() {
 //     }
 // }
 
-double Centroid::computeDist(Point* point) {
-    double d21 = ((*point).first - loc.first) * ((*point).first - loc.first);  // The first term in the dist formula 
-    double d22 = ((*point).second - loc.second) * ((*point).second - loc.second);  // The second term in the dist formula 
-    return sqrt(d21 + d22);                            // The final distance from the point to the provided centroid
+double Centroid::computeDist(Point &point) {
+    double d21 = (point.first - loc.first) * (point.first - loc.first);  // The first term in the dist formula 
+    double d22 = (point.second - loc.second) * (point.second - loc.second);  // The second term in the dist formula 
+    return std::sqrt(d21 + d22);                            // The final distance from the point to the provided centroid
 }
 
 void Centroid::recalculate() { 
-    double x = 0;
-    double y = 0;
-    for (unsigned int i = 0; i < pointsPTR.size(); i++) {
-        x += pointsPTR[i]->first;
-        y += pointsPTR[i]->second;  
+    double x = 0.0;
+    double y = 0.0;
+    for (unsigned int i = 0; i < points.size(); i++) {
+        x += points[i].first;
+        y += points[i].second;  
     }
-    Point avg = std::make_pair(x / pointsPTR.size(), y / pointsPTR.size()); 
-    loc = avg;
+    double avg_x = x / points.size();
+    double avg_y = y / points.size();
+    if (!(std::isnan(avg_x) || std::isnan(avg_y))) {
+        // std::cout << std::isnan(avg_x) << " " << std::isnan(avg_y) << std::endl;
+        Point avg = std::make_pair(avg_x, avg_y);
+        loc = avg;
+    }
 }
 
 bool Centroid::operator==(const Centroid &other) { 

@@ -19,9 +19,10 @@ public:
 
 	void setLocation(double x, double y);
 	std::pair<double, double> getLocation();
-	void addPoint(Point* newP);
+	const std::vector<Point> getPoints();
+	void addPoint(Point newP);
 	void clearPoints(); 
-	double computeDist(Point* point);
+	double computeDist(Point &point);
 	void recalculate(); 
 
 	bool operator== (const Centroid &other);
@@ -30,7 +31,7 @@ public:
 
 protected:
 	std::pair<double, double> loc;	
-	std::vector<Point*> pointsPTR;
+	std::vector<Point> points;
 };
 
 };

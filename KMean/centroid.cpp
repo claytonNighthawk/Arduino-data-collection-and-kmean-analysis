@@ -3,7 +3,6 @@
 #include <utility>      // std::pair
 #include <cmath>        
 #include "centroid.hpp" 
-// #include "point.hpp"
 
 namespace kmean {
 
@@ -13,6 +12,8 @@ Centroid::Centroid(double x, double y) {
     loc = std::make_pair(x, y);
 }
 
+Centroid::~Centroid() {} //TODO: probably causes memory leaks need to come back to this later
+
 void Centroid::setLocation(double x, double y) {
     loc = std::make_pair(x, y);
 }
@@ -21,32 +22,45 @@ std::pair<double, double> Centroid::getLocation() {
     return loc;
 }
 
+const std::vector<Point> Centroid::getPoints() {
+    return points;
+}
+
 void Centroid::addPoint(Point newP) {
     points.push_back(newP);
 }
 
-void Centroid::removePoint(Point oldP) {
-    auto temp = find(points.begin(), points.end(), oldP); 
-    if (temp != points.end()) {
-        points.erase(temp);
-    }
+void Centroid::clearPoints() {
+    points.clear();
 }
 
-double Centroid::computeDist(Point point) {
+// void Centroid::removePoint(Point oldP) {
+//     auto temp = find(points.begin(), points.end(), oldP); 
+//     if (temp != points.end()) {
+//         points.erase(temp);
+//     }
+// }
+
+double Centroid::computeDist(Point &point) {
     double d21 = (point.first - loc.first) * (point.first - loc.first);  // The first term in the dist formula 
     double d22 = (point.second - loc.second) * (point.second - loc.second);  // The second term in the dist formula 
-    return sqrt(d21 + d22);                            // The final distance from the point to the provided centroid
+    return std::sqrt(d21 + d22);                            // The final distance from the point to the provided centroid
 }
 
 void Centroid::recalculate() { 
-    int x = 0;
-    int y = 0;
-    for (int i = 0; i < points.size(); i++) {
+    double x = 0.0;
+    double y = 0.0;
+    for (unsigned int i = 0; i < points.size(); i++) {
         x += points[i].first;
         y += points[i].second;  
     }
-    Point avg = std::make_pair(x / points.size(), y / points.size()); 
-    loc = avg;
+    double avg_x = x / points.size();
+    double avg_y = y / points.size();
+    if (!(std::isnan(avg_x) || std::isnan(avg_y))) {
+        // std::cout << std::isnan(avg_x) << " " << std::isnan(avg_y) << std::endl;
+        Point avg = std::make_pair(avg_x, avg_y);
+        loc = avg;
+    }
 }
 
 bool Centroid::operator==(const Centroid &other) { 
@@ -58,9 +72,7 @@ bool Centroid::operator!=(const Centroid &other) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Centroid& cent) {
-    os << "(" << cent.loc.first << ", " << cent.loc.second << ")";
-    // auto loc = cent.getLocation();
-    // os << "(" << loc.first << ", " << loc.second << ")";
+    os << "Centroid @ (" << cent.loc.first << ", " << cent.loc.second << ")";
     return os;
 }
 

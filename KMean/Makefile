@@ -1,17 +1,19 @@
 CC = g++
-CFLAGS = -g -std=c++11
-KMEAN_OBJECTS = centroid.o kmean.o
+CFLAGS = -g -Wall -std=c++11
+KMEAN_OBJECTS = centroid.o kmean.o 
+TEST_OBJ = test.o
+MAIN_OBJ = main.o
 
 
 %.o: %.cpp
 	$(CC) -c $(CFLAGS) $<
 
-test: $(KMEAN_OBJECTS)
-	$(CC) -o $@ test.cpp $$(KMEAN_OBJECTS)
+test: $(KMEAN_OBJECTS) $(TEST_OBJ)
+	$(CC) -o $@ $(TEST_OBJ) $(KMEAN_OBJECTS)
 
-main: $(KMEAN_OBJECTS)
-	$(CC) -o $@ main.cpp $(KMEAN_OBJECTS)
+main: $(KMEAN_OBJECTS) $(MAIN_OBJ)
+	$(CC) -o $@ $(MAIN_OBJ) $(KMEAN_OBJECTS)
 
 # Remove all objects and test- programs 
 clean: 
-	$(RM) *.o test main
+	$(RM) *.o *.out test main

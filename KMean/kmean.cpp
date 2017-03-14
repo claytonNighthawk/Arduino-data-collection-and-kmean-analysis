@@ -1,9 +1,13 @@
 #include <vector>
 #include <utility>
+#include <cstdlib>
+#include <iostream>
 #include "kmean.hpp"
 #include "centroid.hpp" 
 
 namespace kmean {
+using std::cout;
+using std::endl;
 
 double fRand(double fMin, double fMax) {
     // http://stackoverflow.com/questions/2704521/generate-random-double-numbers-in-c
@@ -11,18 +15,18 @@ double fRand(double fMin, double fMax) {
     return fMin + f * (fMax - fMin);
 }
 
-// Kmean::Kmean() {}
-
-Kmean::Kmean(int numCentroids, std::vector<Point> &points) {
+Kmean::Kmean(int numCentroids, std::vector<Point> &points, double min, double max) {
     this->points = points;
 
     for (int i = 0; i < numCentroids; i++) {
-        double x = fRand(15.0, 25.0); // needs a way to determine min and max of data set
-        double y = fRand(15.0, 25.0); // needs a way to determine min and max of data set
+        double x = fRand(min, max); // needs a way to determine min and max of data set
+        double y = fRand(min, max); // needs a way to determine min and max of data set
         Centroid* cent = new Centroid(x, y);
         centroids.push_back(*cent);
     }
 }
+
+Kmean::~Kmean() {} //TODO: probably causes memory leaks need to come back to this later
 
 // void Kmean::addPoint(double x, double y) {
 //     Point p = new Point(x, y);
@@ -39,37 +43,50 @@ std::vector<Centroid> Kmean::getCentroids() {
 }
 
 void Kmean::run(int iterations) {
-    Point p = points[0];
-    Centroid c = centroids[0];
-    double minDist = c.computeDist(p);
-    int closestCentroid = 0; // 
+    cout << "running kmean" << endl;
+    Point p;
+    Centroid c;
+    int closestCentroid;
     double tempDist;
-    Centroid oldCentroid;
     for (int n = 0; n < iterations; ++n) {
-        for (int i = 0; i < points.size(); i++) {
-            for (int j = 0; j < centroids.size(); j++) {
+        cout << endl << "Starting new iteration" << endl; 
+        unsigned int k; // used when indexing into centroids 
+        // clears the vector of points ready for the new iteration
+        for (k = 0; k < centroids.size(); k++) {
+            centroids[k].clearPoints();
+        }
+        
+        // calculates closest centroid for each point
+        for (unsigned int i = 0; i < points.size(); i++) {
+            p = points[i];
+            c = centroids[0];
+            double minDist = c.computeDist(p);
+            closestCentroid = 0;
+            for (k = 0; k < centroids.size(); k++) {
                 tempDist = c.computeDist(p);
+                cout << "point " << i;
+                cout << " tempDist " << tempDist << " minDist " << minDist << endl;
                 if (minDist > tempDist) {
                     minDist = tempDist;
-                    closestCentroid = j;
+                    closestCentroid = k;
+                    cout << "closestCentroid changed " << closestCentroid << endl;
                 }
-                p = points[i];
-                c = centroids[j];
+                c = centroids[k];
             }
-
-            oldCentroid = p.getCentroid(); // Point not a class anymore this needs to be changed
-            if (oldCentroid != centroids[closestCentroid]) {
-                oldCentroid.removePoint(p);
-                p.setCentroid(centroids[closestCentroid]);
-                centroids[closestCentroid].addPoint(p);
-            }
+            cout << "Point " << i << " closestCentroid " << closestCentroid << endl;
+            centroids[closestCentroid].addPoint(points[i]);
         }
 
-        for (int k = 0; k < centroids.size(); k++) {
+        // recalculate the centroid locations
+        for (k = 0; k < centroids.size(); k++) {
+            cout << "Centroid " << k << " " << centroids[k] << endl;
             centroids[k].recalculate();
+            cout << "Centroid " << k << " " << centroids[k] << endl;
         }
+
     }
-    // Then graph the results or more interesting graph them as the method runs
+    cout << endl;
 }
+// Then graph the results or more interesting graph them as the method runs
 
 };

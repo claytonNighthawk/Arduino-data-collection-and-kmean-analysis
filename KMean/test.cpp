@@ -1,60 +1,94 @@
 #include <vector>
 #include <utility>
+#include <cstdlib>
+#include <iostream>
 #include "kmean.hpp"
 #include "centroid.hpp" 
 
 using namespace kmean;
+using std::cout;
+using std::endl;
 
 double fRand(double fMin, double fMax) {
     double f = (double)rand() / RAND_MAX;
     return fMin + f * (fMax - fMin);
 }
 
-void vectorMaker(std::vector<Point> &points, int numPoints) {
+void pointVectorAdder(std::vector<Point> &points, double min, double max, int numPoints) {
     double x, y;
     Point p;
     for (int i = 0; i < numPoints; i++) {
-        x = fRand(0, 5);
-        y = fRand(0, 5);
-        p = make_pair(x, y);
+        x = fRand(min, max);
+        y = fRand(min, max);
+        p = std::make_pair(x, y);
         points.push_back(p);
     }
 }
 
 void printVector(std::vector<Point> &points) {
-    for (auto i = points.begin(); i != points.end(); ++i) {
-        cout << *i << ' ';
+    cout << "Points " << points.size() << endl;
+    for (unsigned int i = 0; i < points.size(); ++i) {
+        cout << "(" << points[i].first << ", " << points[i].second << ") ";
     }
+    cout << endl << endl;
 }
 
 void printVector(std::vector<Centroid> &centroids) {
-    for (auto i = centroids.begin(); i != centroids.end(); ++i) {
-        cout << *i << ' ';
+    cout << "Centroids " << endl;
+    for (unsigned int i = 0; i < centroids.size(); ++i) {
+        cout << centroids[i] << " ";
     }
+    cout << endl << endl;
+}
+
+void printCentroidPoints(std::vector<Centroid> &centroids) {
+    cout << "Print points attached to centroids " << endl;
+    std::vector<Point> points;
+    for (unsigned int i = 0; i < centroids.size(); ++i) {
+        points = centroids[i].getPoints();
+        cout << "Centroid " << i << ": ";
+        printVector(points);
+    }
+    // cout << endl;   
 }
 
 int main() {
-    int numCentroids = 6; 
-    int iteratons = 20; 
+    // srand(time(NULL));
+    // int numCentroids = 2; 
+    int iteratons = 5; 
     std::vector<Point> points;
+    double min = 0.0;
+    double max = 5.0;
 
-    vectorMaker(points, 10); 
+    pointVectorAdder(points, min, 3, 3); 
+    pointVectorAdder(points, 3, max, 3); 
+
+    
     printVector(points);
 
-    Kmean kmeanTest = new Kmean(numCentroids, points);
-
-    kmeanTest.run(iteratons);
-    std::vector<Centroid> centroids = kmeanTest.getCentroids();
+    Kmean* kmeanTest = new Kmean(1, points, min, 2);
+    kmeanTest->addCentroid(fRand(3, 4), fRand(3, 4));
+    kmeanTest->addCentroid(fRand(4, max), fRand(4, max));
+    std::vector<Centroid> centroids = kmeanTest->getCentroids();
+    printVector(centroids);
+    
+    kmeanTest->run(iteratons);
+    centroids = kmeanTest->getCentroids();
 
     printVector(centroids);
+    printCentroidPoints(centroids);
+    
     printVector(points);
 
-    Point newPoint = make_pair(fRand(0, 5), fRand(0, 5));
-    points.push_back(newPoint);
-    kmeanTest.run(5); 
+    // kmeanTest->addCentroid(fRand(4, 5), fRand(4,max));
+    // pointVectorAdder(points, min, max, 1); 
+    // kmeanTest->run(iteratons); 
+    // centroids = kmeanTest->getCentroids();
 
-    printVector(centroids);
-    printVector(points);
+    // printVector(centroids);
+    // printCentroidPoints(centroids);
+    
+    // printVector(points);
 
     return 0;
 }

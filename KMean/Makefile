@@ -2,7 +2,7 @@ CC = g++
 CFLAGS = -g -Wall -std=c++11
 KMEAN_OBJECTS = centroid.o kmean.o 
 TEST_OBJ = test.o
-MAIN_OBJ = main.o
+MAIN_OBJ = fileparser.o main.o 
 
 
 %.o: %.cpp

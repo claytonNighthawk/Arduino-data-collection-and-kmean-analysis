@@ -114,10 +114,6 @@ void loop() {
   //create output buffer and place the time stamp in it
   String data = String(timestring);
 
-  if (!client.connected()) {
-    client.connect("clsEdison", "Project330", "R00tb33r!123");
-  }
-
   //setup lcd printing
   int cursor = 0;
   lcd.setCursor(cursor, 0);
@@ -143,18 +139,24 @@ void loop() {
 
   // Unknown units, guessing dB
   // doesn't update very fast, can't tell what exactly is happening
-  int soundValue = calcSound();
+  int soundValue = 0;   
 
+  for (int i = 0; i <60; i++){
+  
+  soundValue += calcSound();
+  delay(1000);
+  }
+  //calculate the 1 minute mean value
+  soundValue = soundValue/60;
+  
   data += " S ";
   data += String(soundValue);
  
-
   lcd.setCursor(cursor, 0);
   lcd.print(soundValue);
   cursor += 3;
   lcd.setCursor(cursor, 0);
   lcd.print(" S  "); //incorrect units
-
 
   cursor = 0;
   // Unknown units, guessing Lumins
@@ -178,11 +180,11 @@ void loop() {
   lcd.setCursor(cursor + 1 + floor(log10(minutes)), 1);
   lcd.print(" min");
 
+  //if (!client.connected()) {
+    client.connect("clsEdison", "Project330", "R00tb33r!123");
+  //}
   //send the data to our channel as a char array.
   client.publish("office", data.buffer);
 
-
-  // Wait ten seconds between measurements.
-  delay(6000);
 }
 

@@ -49,14 +49,15 @@ int fileParser(string fileName, vector<Point> &TimeTemp, vector<Point> &TimeLigh
 	  	     
 	  while (getline(dataset, dataline))
 	    {
-	      cout << dataline << endl;
+	      //cout << dataline << endl;
 	      currentLine.str(dataline);
 	      //grab channel and convert text format time to tm
 	      currentLine >> channel >> get_time(&timestampTM, "%Y.%m.%d.%H:%M:%S");
 	      currentLine >> unusedLabel >> temperature;
 	      currentLine >> unusedLabel >> soundlevel;
 	      currentLine >> unusedLabel >>lightlevel;
-
+	      currentLine.clear();
+	      
 	      // cast into doubles into points "pairs"	      
 	      pTimeTemp   = make_pair(double(timestamp), double(temperature));
 	      pTimeLight  = make_pair(double(timestamp), double(lightlevel));
@@ -88,7 +89,7 @@ int fileParser(string fileName, vector<Point> &TimeTemp, vector<Point> &TimeLigh
 	  
 	  if (dataset.eof()) break; // Ensure end of read was EOF.
 	  //reset line
-	  dataset.clear();
+	  
 	  
         }
     }

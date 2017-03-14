@@ -10,7 +10,7 @@ namespace kmean {
 
 class Kmean {
 public:
-	Kmean(int numCentroids, std::vector<Point> &points, double min, double max);
+	Kmean(std::vector<Point> &points, int numCentroids, double min, double max);
 	virtual ~Kmean();
 
 	// void addPoint(double x, double y);  // For eventual data streaming, done externally? 

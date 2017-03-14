@@ -15,7 +15,7 @@ double fRand(double fMin, double fMax) {
     return fMin + f * (fMax - fMin);
 }
 
-Kmean::Kmean(int numCentroids, std::vector<Point> &points, double min, double max) {
+Kmean::Kmean(std::vector<Point> &points, int numCentroids, double min, double max) {
     this->points = points;
 
     for (int i = 0; i < numCentroids; i++) {

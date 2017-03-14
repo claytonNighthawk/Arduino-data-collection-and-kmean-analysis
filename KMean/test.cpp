@@ -70,7 +70,7 @@ int main() {
     
     printVector(points);
 
-    Kmean* kmeanTest = new Kmean(4, points, min, max);
+    Kmean* kmeanTest = new Kmean(points, 4, min, max);
     // kmeanTest->addCentroid(fRand(3, 4), fRand(3, 4));
     // kmeanTest->addCentroid(fRand(4, max), fRand(4, max));
     std::vector<Centroid> centroids = kmeanTest->getCentroids();

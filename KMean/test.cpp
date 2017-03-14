@@ -26,15 +26,18 @@ void pointVectorAdder(std::vector<Point> &points, double min, double max, int nu
 }
 
 void printVector(std::vector<Point> &points) {
-    cout << "Points " << points.size() << endl;
+    cout << "Points " << points.size();
     for (unsigned int i = 0; i < points.size(); ++i) {
+        if (i % 6 == 0) {
+            cout << endl;
+        }
         cout << "(" << points[i].first << ", " << points[i].second << ") ";
     }
     cout << endl << endl;
 }
 
 void printVector(std::vector<Centroid> &centroids) {
-    cout << "Centroids " << endl;
+    cout << "Centroids " << centroids.size() << endl;
     for (unsigned int i = 0; i < centroids.size(); ++i) {
         cout << centroids[i] << " ";
     }
@@ -46,7 +49,7 @@ void printCentroidPoints(std::vector<Centroid> &centroids) {
     std::vector<Point> points;
     for (unsigned int i = 0; i < centroids.size(); ++i) {
         points = centroids[i].getPoints();
-        cout << "Centroid " << i << ": ";
+        cout << "Centroid " << i << " @ " << centroids[i] << " : ";
         printVector(points);
     }
     // cout << endl;   
@@ -55,30 +58,31 @@ void printCentroidPoints(std::vector<Centroid> &centroids) {
 int main() {
     // srand(time(NULL));
     // int numCentroids = 2; 
-    int iteratons = 5; 
+    int iteratons = 3; 
     std::vector<Point> points;
     double min = 0.0;
     double max = 5.0;
 
-    pointVectorAdder(points, min, 3, 3); 
-    pointVectorAdder(points, 3, max, 3); 
+    pointVectorAdder(points, min, max, 24);
+    // pointVectorAdder(points, min, 3, 12); 
+    // pointVectorAdder(points, 3, max, 12); 
 
     
     printVector(points);
 
-    Kmean* kmeanTest = new Kmean(1, points, min, 2);
-    kmeanTest->addCentroid(fRand(3, 4), fRand(3, 4));
-    kmeanTest->addCentroid(fRand(4, max), fRand(4, max));
+    Kmean* kmeanTest = new Kmean(4, points, min, max);
+    // kmeanTest->addCentroid(fRand(3, 4), fRand(3, 4));
+    // kmeanTest->addCentroid(fRand(4, max), fRand(4, max));
     std::vector<Centroid> centroids = kmeanTest->getCentroids();
     printVector(centroids);
     
-    kmeanTest->run(iteratons);
-    centroids = kmeanTest->getCentroids();
-
-    printVector(centroids);
-    printCentroidPoints(centroids);
-    
-    printVector(points);
+    for (int i = 0; i < iteratons; i++) {
+        kmeanTest->run(1);
+        centroids = kmeanTest->getCentroids();
+        printVector(points);
+        // printVector(centroids);
+        printCentroidPoints(centroids);
+    }
 
     // kmeanTest->addCentroid(fRand(4, 5), fRand(4,max));
     // pointVectorAdder(points, min, max, 1); 

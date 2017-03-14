@@ -43,11 +43,11 @@ std::vector<Centroid> Kmean::getCentroids() {
 }
 
 void Kmean::run(int iterations) {
-    cout << "running kmean" << endl;
     Point p;
     Centroid c;
     int closestCentroid;
     double tempDist;
+    double minDist;
     for (int n = 0; n < iterations; ++n) {
         cout << endl << "Starting new iteration" << endl; 
         unsigned int k; // used when indexing into centroids 
@@ -60,26 +60,26 @@ void Kmean::run(int iterations) {
         for (unsigned int i = 0; i < points.size(); i++) {
             p = points[i];
             c = centroids[0];
-            double minDist = c.computeDist(p);
+            minDist = c.computeDist(p);
             closestCentroid = 0;
-            for (k = 0; k < centroids.size(); k++) {
+            cout << "stating minDist = " << minDist << endl;
+            for (k = 1; k < centroids.size(); k++) {
+                c = centroids[k];
                 tempDist = c.computeDist(p);
-                cout << "point " << i;
-                cout << " tempDist " << tempDist << " minDist " << minDist << endl;
                 if (minDist > tempDist) {
                     minDist = tempDist;
                     closestCentroid = k;
-                    cout << "closestCentroid changed " << closestCentroid << endl;
+                    cout << "point " << i << " closestCentroid changed to " << closestCentroid;
+                    cout << ", minDist = " << minDist << endl;
                 }
-                c = centroids[k];
             }
-            cout << "Point " << i << " closestCentroid " << closestCentroid << endl;
+            cout << "Point " << i << " closestCentroid " << closestCentroid << endl << endl;
             centroids[closestCentroid].addPoint(points[i]);
         }
 
         // recalculate the centroid locations
         for (k = 0; k < centroids.size(); k++) {
-            cout << "Centroid " << k << " " << centroids[k] << endl;
+            cout << "Centroid " << k << " " << centroids[k] << " changes to -> " << endl;
             centroids[k].recalculate();
             cout << "Centroid " << k << " " << centroids[k] << endl;
         }

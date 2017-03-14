@@ -2,8 +2,11 @@
 #include <utility>
 #include <cstdlib>
 #include <iostream>
+#include <map>
+#include <string>
 #include "kmean.hpp"
 #include "centroid.hpp" 
+// #include "minmaxvector.hpp"
 #include "fileparser.hpp" // fileparser from chris
 
 using namespace kmean;
@@ -11,6 +14,9 @@ using std::cout;
 using std::endl;
 using std::vector;
 using std::pair;
+using std::map;
+using std::touple;
+using std::string;
 
 void printVector(std::vector<Point> &points) {
     cout << "Points " << points.size();
@@ -43,39 +49,44 @@ void printCentroidPoints(std::vector<Centroid> &centroids) {
 }
 
 int main() {
-    int numCentroids = 6; 
-    int iteratons = 10; 
+    int numCentroids = 15; 
+    int iteratons = 1; 
     double min = 15.0; // for temp
-    double max = 30.0;
-    // T = time, Temp = temperature, L = light, S = sound
-    vector<Point> points_TTemp;
-    vector<Point> points_TL;
-    vector<Point> points_TS;
-    vector<Point> points_TempL;
-    vector<Point> points_TempS;
-    vector<Point> points_LS;
-    // a vector of vectors would make more sense
+    double max = 250;
+    map<string, touple<vector<Point>, double, double>> pointsMap;
+    std::vector<string> mapKeys = {"TimeTemp", "TimeLight", "TimeSound", "TempLight", "TempSound", "LightSound"};
 
-    // calls file parser on fileName and populates the vectors
-    fileParser("data/singlesensor", points_TTemp, points_TL, points_TS, points_TempL, points_TempS, points_LS);
+
+    // T = time, Temp = temperature, L = light, S = sound
+    // vector<Point> points_TTemp;
+    // vector<Point> points_TL;
+    // vector<Point> points_TS;
+    // vector<Point> points_TempL;
+    // vector<Point> points_TempS;
+    // vector<Point> points_LS;
+    // a vector of vectors would make more sense
     
-    Kmean* kmean_TTemp = new Kmean(points_TTemp, numCentroids, min, max);
+
+    // calls fileparser and populates the map and everything inside of it 
+    fileParser(pointsMap, mapKeys, "data/singlesensor");
+    
+    // Kmean* kmean_TTemp = new Kmean(points_TTemp, numCentroids, min, max);
     // Kmean* kmean_TL = new Kmean(numCentroids, points_TL);
-    // Kmean* kmean_TS = new Kmean(numCentroids, points_TS);
+    // Kmean* kmean_TS = new Kmean(points_TS, numCentroids, min, max);
     // Kmean* kmean_TempL = new Kmean(numCentroids, points_TempL);
-    // Kmean* kmean_TempS = new Kmean(numCentroids, points_TempS);
+    Kmean* kmean_TempS = new Kmean(pointsMap, numCentroids, min, max);
     // Kmean* kmean_LS = new Kmean(numCentroids, points_LS);
 
-    printVector(points_TTemp);
-    std::vector<Centroid> centroids_TTemp = kmean_TTemp->getCentroids();
-    printVector(centroids_TTemp);
+    printVector(points_TempS);
+    std::vector<Centroid> centroids_TempS = kmean_TempS->getCentroids();
+    printVector(centroids_TempS);
     
     for (int i = 0; i < iteratons; i++) {
-        kmean_TTemp->run(1);
-        centroids_TTemp = kmean_TTemp->getCentroids();
-        printVector(points_TTemp);
-        // printVector(centroids_TTemp);
-        printCentroidPoints(centroids_TTemp);
+        kmean_TempS->run(1);
+        centroids_TempS = kmean_TempS->getCentroids();
+        // printVector(points_TempS);
+        // printVector(centroids_TempS);
+        printCentroidPoints(centroids_TempS);
     }
 
 

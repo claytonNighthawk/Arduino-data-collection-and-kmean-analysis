@@ -8,11 +8,12 @@
 #include <locale>
 #include <iomanip>
 #include "fileparser.hpp"
+// #include "minmaxvector.hpp"
 
 
 using namespace std;
 
-int fileParser(string fileName, vector<Point> &TimeTemp, vector<Point> &TimeLight, vector<Point> &TimeSound, vector<Point> &TempLight, vector<Point> &TempSound, vector<Point> &LightSound) {
+int fileParser(std::map<string, std::touple<std::vector<Point>, double, double>> pointsMap, std::vector<std::string> mapKeys, std::string fileName) {
     ifstream dataset(fileName);
 
     // date extracted from the file

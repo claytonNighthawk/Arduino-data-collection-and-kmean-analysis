@@ -1,13 +1,15 @@
-#ifndef __KMEAN_HPP
-#define __KMEAN_HPP
+#ifndef __FILEPARSER_HPP
+#define __FILEPARSER_HPP
 
 #include <vector>
 #include <string>
 #include <utility>
+// #include "minmaxvector.hpp"
 
+namespace kmean {
 typedef std::pair<double, double> Point;
 
-int fileParser(string fileName, std::vector<Point> &TimeTemp, std::vector<Point> &TimeLight, std::vector<Point> &TimeSound, std::vector<Point> &TempLight, \
-                std::vector<Point> &TempSound, std::vector<Point> &LightSound);
+int fileParser(std::map<string, touple<vector<Point> pointsMap, double, double>>&, std::vector<std::string>& mapKeys, std::string fileName);
 
+}
 #endif

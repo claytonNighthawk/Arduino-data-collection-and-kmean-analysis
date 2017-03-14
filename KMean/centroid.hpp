@@ -4,11 +4,10 @@
 #include <vector>
 #include <utility>
 #include <iostream>
+// #include "minmaxvector.hpp"
 
 namespace kmean {
 typedef std::pair<double, double> Point;
-// Since pair<double, double> and Point are functionally the same anything I declare as 
-// pair<double, double> is just a plain location where as Point has more meaning attached
 
 class Centroid {
 

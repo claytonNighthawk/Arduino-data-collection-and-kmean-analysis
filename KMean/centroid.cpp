@@ -3,6 +3,7 @@
 #include <utility>      // std::pair
 #include <cmath>        
 #include "centroid.hpp" 
+// #include "minmaxvector.hpp"
 
 namespace kmean {
 

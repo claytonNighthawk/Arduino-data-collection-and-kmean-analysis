@@ -4,16 +4,15 @@
 #include <vector>
 #include <utility>
 #include "centroid.hpp" 
+#include "minmaxvector.hpp"
 
 namespace kmean {
-// typedef std::pair<double, double> Point; //From centroid.hpp
 
 class Kmean {
 public:
 	Kmean(std::vector<Point> &points, int numCentroids, double min, double max);
 	virtual ~Kmean();
 
-	// void addPoint(double x, double y);  // For eventual data streaming, done externally? 
 	void addCentroid(double x, double y);  
 	std::vector<Centroid> getCentroids();
 	void run(int iteratons);

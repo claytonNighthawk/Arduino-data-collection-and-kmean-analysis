@@ -1,4 +1,4 @@
-#ifndef __POINT_HPP
+ifndef __POINT_HPP
 #define __POINT_HPP
 
 #include <utility>

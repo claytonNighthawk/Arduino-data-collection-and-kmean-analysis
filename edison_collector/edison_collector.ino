@@ -111,6 +111,8 @@ void loop() {
   localt = localtime(&t);
   strftime(timestring, 22, "%Y.%m.%d.%H:%M:%S ", localt);
 
+ 
+
   //create output buffer and place the time stamp in it
   String data = String(timestring);
 
@@ -143,8 +145,9 @@ void loop() {
 
   for (int i = 0; i <60; i++){
   
-  soundValue += calcSound();
-  delay(1000);
+    soundValue += calcSound();
+    delay(1000);
+    //client.loop();  // keeps the conneciton alive  
   }
   //calculate the 1 minute mean value
   soundValue = soundValue/60;
@@ -180,11 +183,13 @@ void loop() {
   lcd.setCursor(cursor + 1 + floor(log10(minutes)), 1);
   lcd.print(" min");
 
-  //if (!client.connected()) {
-    client.connect("clsEdison", "Project330", "R00tb33r!123");
-  //}
+ if (!client.connected()) {
+     client.connect("clsEdison", "Project330", "R00tb33r!123");
+  }
+
   //send the data to our channel as a char array.
   client.publish("office", data.buffer);
+  client.disconnect();
 
 }
 

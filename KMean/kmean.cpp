@@ -19,19 +19,15 @@ Kmean::Kmean(std::vector<Point> &points, int numCentroids, double min, double ma
     this->points = points;
 
     for (int i = 0; i < numCentroids; i++) {
-        double x = fRand(min, max); // needs a way to determine min and max of data set
-        double y = fRand(min, max); // needs a way to determine min and max of data set
-        Centroid* cent = new Centroid(x, y);
-        centroids.push_back(*cent);
+        double x = fRand(min, max); 
+        double y = fRand(min, max);
+        centroids.emplace_back(x, y);
     }
 }
 
-Kmean::~Kmean() {} //TODO: probably causes memory leaks need to come back to this later
-
-// void Kmean::addPoint(double x, double y) {
-//     Point p = new Point(x, y);
-//     points.push_back(p);
-// } 
+Kmean::~Kmean() { //TODO: probably causes memory leaks need to come back to this later
+    points.clear();
+} 
 
 void Kmean::addCentroid(double x, double y) {
     Centroid* c = new Centroid(x, y);
@@ -49,11 +45,12 @@ void Kmean::run(int iterations) {
     double tempDist;
     double minDist;
     for (int n = 0; n < iterations; ++n) {
-        cout << endl << "Starting new iteration" << endl; 
         unsigned int k; // used when indexing into centroids 
         // clears the vector of points ready for the new iteration
-        for (k = 0; k < centroids.size(); k++) {
-            centroids[k].clearPoints();
+        if (n != 0) {        
+            for (k = 0; k < centroids.size(); k++) {
+                centroids[k].clearPoints();
+            }
         }
         
         // calculates closest centroid for each point
@@ -62,18 +59,18 @@ void Kmean::run(int iterations) {
             c = centroids[0];
             minDist = c.computeDist(p);
             closestCentroid = 0;
-            cout << "stating minDist = " << minDist << endl;
+            // cout << "stating minDist = " << minDist << endl;
             for (k = 1; k < centroids.size(); k++) {
                 c = centroids[k];
                 tempDist = c.computeDist(p);
                 if (minDist > tempDist) {
                     minDist = tempDist;
                     closestCentroid = k;
-                    cout << "point " << i << " closestCentroid changed to " << closestCentroid;
-                    cout << ", minDist = " << minDist << endl;
+                    // cout << "point " << i << " closestCentroid changed to " << closestCentroid;
+                    // cout << ", minDist = " << minDist << endl;
                 }
             }
-            cout << "Point " << i << " closestCentroid " << closestCentroid << endl << endl;
+            // cout << "Point " << i << " closestCentroid " << closestCentroid << endl << endl;
             centroids[closestCentroid].addPoint(points[i]);
         }
 

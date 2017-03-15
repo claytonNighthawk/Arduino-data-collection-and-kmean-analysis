@@ -12,7 +12,9 @@ Centroid::Centroid(double x, double y) {
     loc = std::make_pair(x, y);
 }
 
-Centroid::~Centroid() {} //TODO: probably causes memory leaks need to come back to this later
+Centroid::~Centroid() { //TODO: probably causes memory leaks need to come back to this later, maybe fixed?
+    points.clear();
+} 
 
 void Centroid::setLocation(double x, double y) {
     loc = std::make_pair(x, y);
@@ -34,13 +36,6 @@ void Centroid::clearPoints() {
     points.clear();
 }
 
-// void Centroid::removePoint(Point oldP) {
-//     auto temp = find(points.begin(), points.end(), oldP); 
-//     if (temp != points.end()) {
-//         points.erase(temp);
-//     }
-// }
-
 double Centroid::computeDist(Point &point) {
     double d21 = (point.first - loc.first) * (point.first - loc.first);  // The first term in the dist formula 
     double d22 = (point.second - loc.second) * (point.second - loc.second);  // The second term in the dist formula 
@@ -57,7 +52,6 @@ void Centroid::recalculate() {
     double avg_x = x / points.size();
     double avg_y = y / points.size();
     if (!(std::isnan(avg_x) || std::isnan(avg_y))) {
-        // std::cout << std::isnan(avg_x) << " " << std::isnan(avg_y) << std::endl;
         Point avg = std::make_pair(avg_x, avg_y);
         loc = avg;
     }

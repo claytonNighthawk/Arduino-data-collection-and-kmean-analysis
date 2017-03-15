@@ -4,7 +4,6 @@
 #include <vector>
 #include <utility>
 #include "centroid.hpp" 
-#include "minmaxvector.hpp"
 
 namespace kmean {
 

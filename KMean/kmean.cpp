@@ -4,7 +4,6 @@
 #include <iostream>
 #include "kmean.hpp"
 #include "centroid.hpp" 
-#include "minmaxvector.hpp"
 
 namespace kmean {
 using std::cout;

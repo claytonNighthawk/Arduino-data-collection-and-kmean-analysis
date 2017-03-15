@@ -4,7 +4,6 @@
 #include <vector>
 #include <utility>
 #include <iostream>
-// #include "minmaxvector.hpp"
 
 namespace kmean {
 typedef std::pair<double, double> Point;

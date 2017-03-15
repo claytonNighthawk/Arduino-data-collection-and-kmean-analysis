@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include <iostream>
 #include "kmean.hpp"
-#include "minmaxvector.hpp"
 #include "centroid.hpp" 
 
 using namespace kmean;

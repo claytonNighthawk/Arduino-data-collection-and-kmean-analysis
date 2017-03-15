@@ -3,10 +3,10 @@
 #include <cstdlib>
 #include <iostream>
 #include <map>
+#include <tuple>
 #include <string>
 #include "kmean.hpp"
 #include "centroid.hpp" 
-// #include "minmaxvector.hpp"
 #include "fileparser.hpp" // fileparser from chris
 
 using namespace kmean;
@@ -15,10 +15,11 @@ using std::endl;
 using std::vector;
 using std::pair;
 using std::map;
-using std::touple;
+using std::tuple;
 using std::string;
+using std::get;
 
-void printVector(std::vector<Point> &points) {
+void printVector(vector<Point> &points) {
     cout << "Points " << points.size();
     for (unsigned int i = 0; i < points.size(); ++i) {
         if (i % 6 == 0) {
@@ -29,17 +30,20 @@ void printVector(std::vector<Point> &points) {
     cout << endl << endl;
 }
 
-void printVector(std::vector<Centroid> &centroids) {
+void printVector(vector<Centroid> &centroids) {
     cout << "Centroids " << centroids.size() << endl;
     for (unsigned int i = 0; i < centroids.size(); ++i) {
+        if (i % 6 == 0) {
+            cout << endl;
+        }
         cout << centroids[i] << " ";
     }
     cout << endl << endl;
 }
 
-void printCentroidPoints(std::vector<Centroid> &centroids) {
+void printCentroidPoints(vector<Centroid> &centroids) {
     cout << "Print points attached to centroids " << endl;
-    std::vector<Point> points;
+    vector<Point> points;
     for (unsigned int i = 0; i < centroids.size(); ++i) {
         points = centroids[i].getPoints();
         cout << "Centroid " << i << " @ " << centroids[i] << " : ";
@@ -49,12 +53,11 @@ void printCentroidPoints(std::vector<Centroid> &centroids) {
 }
 
 int main() {
-    int numCentroids = 15; 
+    int numCentroids = 10; 
     int iteratons = 1; 
-    double min = 15.0; // for temp
-    double max = 250;
-    map<string, touple<vector<Point>, double, double>> pointsMap;
-    std::vector<string> mapKeys = {"TimeTemp", "TimeLight", "TimeSound", "TempLight", "TempSound", "LightSound"};
+    map<string, tuple<vector<Point>, double, double>> minMaxVectorMap;
+    vector<string> mapKeys = {"TimeTemp", "TimeLight", "TimeSound", "TempLight", "TempSound", "LightSound"};
+    map<string, Kmean*> kmeanMap;
 
 
     // T = time, Temp = temperature, L = light, S = sound
@@ -68,26 +71,34 @@ int main() {
     
 
     // calls fileparser and populates the map and everything inside of it 
-    fileParser(pointsMap, mapKeys, "data/singlesensor");
-    
-    // Kmean* kmean_TTemp = new Kmean(points_TTemp, numCentroids, min, max);
-    // Kmean* kmean_TL = new Kmean(numCentroids, points_TL);
-    // Kmean* kmean_TS = new Kmean(points_TS, numCentroids, min, max);
-    // Kmean* kmean_TempL = new Kmean(numCentroids, points_TempL);
-    Kmean* kmean_TempS = new Kmean(pointsMap, numCentroids, min, max);
-    // Kmean* kmean_LS = new Kmean(numCentroids, points_LS);
+    fileParser(minMaxVectorMap, mapKeys, "data/smallsample400");
 
-    printVector(points_TempS);
-    std::vector<Centroid> centroids_TempS = kmean_TempS->getCentroids();
-    printVector(centroids_TempS);
-    
-    for (int i = 0; i < iteratons; i++) {
-        kmean_TempS->run(1);
-        centroids_TempS = kmean_TempS->getCentroids();
-        // printVector(points_TempS);
-        // printVector(centroids_TempS);
-        printCentroidPoints(centroids_TempS);
+    for (string key : mapKeys) {
+        kmeanMap[key] = new Kmean(get<0>(minMaxVectorMap[key]), numCentroids, get<1>(minMaxVectorMap[key]), get<2>(minMaxVectorMap[key]));
     }
+    
+    // Kmean* kmean_TTemp = new Kmean(get<0>(minMaxVectorMap["TimeTemp"]), numCentroids, get<1>(minMaxVectorMap["TimeTemp"]), get<2>(minMaxVectorMap["TimeTemp"]));
+    // Kmean* kmean_TL = new Kmean(get<0>(minMaxVectorMap["TimeLight"]), numCentroids, get<1>(minMaxVectorMap["TimeLight"]), get<2>(minMaxVectorMap["TimeLight"]));
+    // Kmean* kmean_TS = new Kmean(get<0>(minMaxVectorMap["TimeSound"]), numCentroids, get<1>(minMaxVectorMap["TimeSound"]), get<2>(minMaxVectorMap["TimeSound"]));
+    // Kmean* kmean_TempL = new Kmean(get<0>(minMaxVectorMap["TempLight"]), numCentroids, get<1>(minMaxVectorMap["TempLight"]), get<2>(minMaxVectorMap["TempLight"]));
+    // Kmean* kmean_TempS = new Kmean(get<0>(minMaxVectorMap["TempSound"]), numCentroids, get<1>(minMaxVectorMap["TempSound"]), get<2>(minMaxVectorMap["TempSound"]));
+    // Kmean* kmean_LS = new Kmean(get<0>(minMaxVectorMap["LightSound"]), numCentroids, get<1>(minMaxVectorMap["LightSound"]), get<2>(minMaxVectorMap["LightSound"]));
+
+    printVector(get<0>(minMaxVectorMap["TimeTemp"]));
+    vector<Centroid> centroids = kmeanMap["TimeTemp"]->getCentroids();
+    printVector(centroids);
+
+    kmeanMap["TimeTemp"]->run(iteratons);
+    centroids = kmeanMap["TimeTemp"]->getCentroids();
+    printCentroidPoints(centroids);
+    
+    // for (string key : mapKeys) {
+    //     kmeanMap[key]->run(iteratons);
+    //     centroids = kmeanMap[key]->getCentroids();
+    //     // printVector(points_TempS);
+    //     // printVector(centroids_TimeTemp);
+    //     printCentroidPoints(centroids);
+    // }
 
 
     // kmean_TTemp.run(iteratons);

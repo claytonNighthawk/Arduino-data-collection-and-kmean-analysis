@@ -16,6 +16,7 @@ double fRand(double fMin, double fMax) {
 }
 
 Kmean::Kmean(std::vector<Point> &points, int numCentroids, double min, double max) {
+    srand(time(NULL));
     this->points = points;
 
     for (int i = 0; i < numCentroids; i++) {
@@ -25,13 +26,12 @@ Kmean::Kmean(std::vector<Point> &points, int numCentroids, double min, double ma
     }
 }
 
-Kmean::~Kmean() { //TODO: probably causes memory leaks need to come back to this later
+Kmean::~Kmean() { 
     points.clear();
 } 
 
 void Kmean::addCentroid(double x, double y) {
-    Centroid* c = new Centroid(x, y);
-    centroids.push_back(*c);
+    centroids.emplace_back(x,y);
 }
 
 std::vector<Centroid> Kmean::getCentroids() {
@@ -76,9 +76,9 @@ void Kmean::run(int iterations) {
 
         // recalculate the centroid locations
         for (k = 0; k < centroids.size(); k++) {
-            cout << "Centroid " << k << " " << centroids[k] << " changes to -> " << endl;
+            // cout << "Centroid " << k << " " << centroids[k] << " changes to -> " << endl;
             centroids[k].recalculate();
-            cout << "Centroid " << k << " " << centroids[k] << endl;
+            // cout << "Centroid " << k << " " << centroids[k] << endl;
         }
 
     }

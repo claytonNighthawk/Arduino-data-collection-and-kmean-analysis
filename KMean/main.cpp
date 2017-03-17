@@ -50,14 +50,14 @@ void printCentroidPoints(vector<Centroid> &centroids) {
     }
 }
 
-void graphIt(vector<Centroid> &centroids) {
+void graphIt(vector<Centroid> &centroids, string key) {
     vector<Point> points;
     vector<Point> centroid;
     int pt = 12;
     //Gnuplot gp("tee plot.gnu");
     Gnuplot gp;    
 
-    //gp << "set zrange [-1:1]\n";      
+    gp << "set title '"<< key <<"' \n";      
     gp << "plot ";
 
     //build the command
@@ -112,7 +112,7 @@ int main() {
         // printVector(get<0>(minMaxVectorMap[key]));
         // printVector(centroids);
         printCentroidPoints(centroids);
-        graphIt(centroids);  
+        graphIt(centroids, key);  
   
     }
 

@@ -5,6 +5,7 @@
 #include <utility>
 #include "centroid.hpp" 
 
+
 namespace kmean {
 
 class Kmean {

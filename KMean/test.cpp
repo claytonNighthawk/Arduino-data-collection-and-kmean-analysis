@@ -16,12 +16,10 @@ double fRand(double fMin, double fMax) {
 
 void pointVectorAdder(std::vector<Point> &points, double min, double max, int numPoints) {
     double x, y;
-    Point p;
     for (int i = 0; i < numPoints; i++) {
         x = fRand(min, max);
         y = fRand(min, max);
-        p = std::make_pair(x, y);
-        points.push_back(p);
+        points.emplace_back(x,y);
     }
 }
 

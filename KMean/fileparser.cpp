@@ -10,14 +10,6 @@
 #include "fileparser.hpp"
 
 using namespace std;
-// namespace kmean {
-// using std::map;
-// using std::string;
-// using std::tuple;
-// using std::vector;
-// using std::ifstream; 
-// using std::stringstream;
-// using std::get_time;
 
 int fileParser(map<string, tuple<vector<Point>, double, double>>& minMaxVectorMap, vector<string>& mapKeys, string fileName) {
     ifstream dataset(fileName);  

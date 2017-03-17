@@ -1,4 +1,3 @@
-#include <algorithm>    // std::find
 #include <vector>       // std::vector
 #include <utility>      // std::pair
 #include <cmath>        
@@ -39,7 +38,7 @@ void Centroid::clearPoints() {
 double Centroid::computeDist(Point &point) {
     double d21 = (point.first - loc.first) * (point.first - loc.first);  // The first term in the dist formula 
     double d22 = (point.second - loc.second) * (point.second - loc.second);  // The second term in the dist formula 
-    return std::sqrt(d21 + d22);                            // The final distance from the point to the provided centroid
+    return std::sqrt(d21 + d22);                            // The final distance from the centroid to the provided point
 }
 
 void Centroid::recalculate() { 

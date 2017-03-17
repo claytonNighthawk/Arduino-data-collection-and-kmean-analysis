@@ -72,7 +72,7 @@ int main() {
         kmeanMap[key]->run(iteratons);
         centroids = kmeanMap[key]->getCentroids();
         // printVector(get<0>(minMaxVectorMap[key]));
-        // printVector(centroids_TimeTemp);
+        // printVector(centroids);
         printCentroidPoints(centroids);
     }
 

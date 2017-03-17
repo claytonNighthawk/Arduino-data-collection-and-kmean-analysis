@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <iostream>
 #include "kmean.hpp"
-#include "centroid.hpp" 
+#include "centroid.hpp"
 
 namespace kmean {
 using std::cout;
@@ -84,6 +84,5 @@ void Kmean::run(int iterations) {
     }
     cout << endl;
 }
-// Then graph the results or more interesting graph them as the method runs
-
+  
 };

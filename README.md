@@ -5,4 +5,6 @@ sudo apt-get install gnuplot
 
 sudo apt-get install libboost-all-dev
 
-cd Kmean make main
+cd Kmean 
+
+make main

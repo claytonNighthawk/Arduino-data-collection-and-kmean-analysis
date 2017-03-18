@@ -5,6 +5,4 @@ sudo apt-get install gnuplot
 
 sudo apt-get install libboost-all-dev
 
-git clone https://github.com/dstahlke/gnuplot-iostream.git
-
 cd Kmean make main
